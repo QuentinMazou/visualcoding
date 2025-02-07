@@ -1,0 +1,53 @@
+sdl converti en Processing
+
+
+
+int windowWidth = 800;
+int windowHeight = 600;
+
+float ratio = 0.7; // Facteur de réduction des branches
+float stepAngle = PI / 4; // Angle entre les branches
+int maxIterations = 10; // Nombre maximal d'itérations
+
+void setup() {
+  size(windowWidth, windowHeight);
+}
+
+void draw() {
+  background(255);
+
+  // Dessiner l'arbre
+  stroke(0);
+  drawTree(width / 2, height, height / 4, 0, 0);
+}
+
+// Fonction récursive pour dessiner l'arbre fractal
+void drawTree(float x, float y, float len, float angle, int iteration) {
+  if (iteration == 0) {
+    float y1 = y - len; // Prolongement en ligne droite
+    line(x, y, x, y1);
+    drawTree(x, y1, len * ratio, 0, 1);
+  } else if (iteration <= maxIterations) {
+    float x1 = x - len * sin(angle + stepAngle);
+    float y1 = y - len * cos(angle + stepAngle);
+    line(x, y, x1, y1);
+    drawTree(x1, y1, len * ratio, angle + stepAngle, iteration + 1);
+
+    float x2 = x - len * sin(angle - stepAngle);
+    float y2 = y - len * cos(angle - stepAngle);
+    line(x, y, x2, y2);
+    drawTree(x2, y2, len * ratio, angle - stepAngle, iteration + 1);
+  }
+}
+
+void keyPressed() {
+  // Quitter avec Shift + Q
+  if (key == 'Q' && keyCode == SHIFT) {
+    exit();
+  }
+}
+
+void settings() {
+  // Gestion dynamique de la taille de la fenêtre
+  fullScreen(P2D);
+}
