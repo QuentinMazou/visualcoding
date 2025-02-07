@@ -28,7 +28,7 @@ void draw()
     rect(width/2,height/2, xDelta * frameCount,height);
     fill(BLACK);
   }
-  else if(frameCount < 90)
+  else if(frameCount <= 90)
   {
     background(WHITE);
     xDelta = width / 30.;
